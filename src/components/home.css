@@ -1,0 +1,12 @@
+.animecard{
+    max-width:225px;
+    display:flex;
+    flex-direction: column;
+    text-align: center;
+}
+main{
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap:20px
+}
