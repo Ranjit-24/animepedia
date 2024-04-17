@@ -5,8 +5,12 @@
     text-align: center;
 }
 main{
+    padding: 150px auto;
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
     gap:20px
+}
+main > a ,main > a:hover{
+    color:white;
 }

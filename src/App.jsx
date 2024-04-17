@@ -1,5 +1,6 @@
 import { BrowserRouter as Router , Routes,Route , Link} from 'react-router-dom'
-import { Newarrival } from './components/newarriival'
+import { Manga } from './components/manga'
+import { Animecard } from './components/animedetails'
 import { Home } from './components/home'
 import { createContext, useEffect } from 'react'
 import  Axios  from 'axios'
@@ -11,10 +12,13 @@ function App() {
   let [fullanimedata,setfulldata]=useState([])
   const [animedata,setanimedata]=useState([])
   let [pagenum,setnum]=useState(1)
-  async function fetchreq(){
-    const resp = await Axios.get(`https://api.jikan.moe/v4/top/anime?page=${pagenum}`)
+  let [showid,setshowid]=useState(false)
+  const [category,setcategory]=useState("anime")
+  async function fetchreq(pageunit){
+    const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pageunit}`)
     adddata(resp.data.data)
     setfulldata(resp.data.data)
+    console.log(resp.data);
   }
   function adddata(data){
     let anime_obj={}
@@ -26,30 +30,30 @@ function App() {
         title:(value.title),
         title_jap:(value.title_japanese),
         image:(value.images.jpg.image_url),
-        episodes:(value.episodes)
       }
       newarray=[...newarray,anime_obj]
     })
     setanimedata(newarray)
-    
   }
-
-  useEffect(()=>{fetchreq()},[pagenum])
-  
-
+  function changepage(cat){
+    setnum(1)
+    setcategory(cat)
+  }
+  useEffect(()=>{fetchreq(pagenum)},[pagenum,category])
   return (
-    <appcontext.Provider value={{animedata,setnum,fullanimedata}}>
+    <appcontext.Provider value={{animedata,pagenum,setnum,setshowid}}>
       <div className="App">
         <Router>
           <nav className="navbar">
-          <Link to="/"><h1>Animepedia</h1></Link>
+          <Link to="/" onClick={()=>changepage("anime")}><h1>Animepedia</h1></Link>
             <div className="linkdiv">
-            <Link to="/newarrival">New Arrival</Link>
+            <Link to="/manga" onClick={()=>changepage("manga")}>Manga</Link>
             </div>
           </nav>
           <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path='/newarrival' element={<Newarrival/>}/>
+            <Route path='/manga' element={<Manga/>}/>
+            <Route path="/animedetails" element={<Animecard fulldata={fullanimedata} id={--showid}/>} />
           </Routes>
         </Router>
       </div>

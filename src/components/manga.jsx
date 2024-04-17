@@ -3,7 +3,7 @@ import { appcontext } from "../App"
 import { Pagination } from "./pagination"
 import { Link } from "react-router-dom"
 import "./home.css"
-export function Home(){
+export function Manga(){
     const {animedata,setshowid}=useContext(appcontext)
     return (
         <>

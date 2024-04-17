@@ -12,3 +12,30 @@ button{
     border: none;
     background-color: rgba(190, 49, 49, 0.795);
 }
+.pagenumbering{
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    text-align: center;
+
+}
+
+#next_page_num,#prev_page_num{
+    width: 55px;
+    height: 55px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(88, 75, 75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#pret_page_num{
+    width: 65px;
+    height: 65px;
+    border:2px solid white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

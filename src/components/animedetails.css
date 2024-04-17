@@ -1,0 +1,8 @@
+.card{
+    display: flex;
+    gap: 30px;
+} 
+.card img{
+    min-width: 350px;
+    min-height: 300px;
+}
