@@ -61,7 +61,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path='/manga' element={<Manga/>}/>
-            <Route path="/animedetails" element={loading?<Navigate to="/" replace/>:<Animecard/>} />
+            <Route path="/animedetails" element={loading?<Navigate to="https://animepedia-tv.netlify.app" replace/>:<Animecard/>} />
           </Routes>
         </Router>
       </div>
