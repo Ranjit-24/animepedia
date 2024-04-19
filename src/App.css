@@ -19,11 +19,17 @@ h1{
   color: white;
   margin : "0"
 }
-@media only screen and (max-width:430px){
+
+@media only screen and (max-width:550px){
   body{
-    margin: 0 25px;
+    margin: 0 20px;
   }
   .navbar{
     margin: 15px 0 35px 0;
+  }
+}
+@media only screen and (max-width:400px){
+  body{
+    margin: 0 10px;
   }
 }

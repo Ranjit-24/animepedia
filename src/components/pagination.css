@@ -48,7 +48,26 @@ button{
         width: 40px;
         height: 40px;
     }
+}
+@media only screen and (max-width:400px) {
+    .noprev{
+        min-width:60px; 
+    }
+    .pagenumbering{
+        gap:10px;
+        max-width: 50%;
+    }
+    #pret_page_num,#prev_page_num,#next_page_num{
+        width: 35px;
+        height: 35px;
+    }
     button{
         padding: 15px;
+    }
+}
+@media only screen and (max-width:320px) {
+    #pret_page_num,#prev_page_num,#next_page_num{
+        width: 25px;
+        height: 25px;
     }
 }
