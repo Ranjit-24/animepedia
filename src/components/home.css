@@ -13,3 +13,18 @@ main{
 main > a ,main > a:hover{
     color:white;
 }
+@media only screen and (max-width:430px) {
+    .animecard > img,.animecard >p{
+        max-width:175px ;
+    }
+}
+@media only screen and (max-width:380px) {
+    .animecard>img,.animecard >p{
+        max-width: 150px;
+    }
+}
+@media only screen and (max-width:340px) {
+    .animecard>img,.animecard > p{
+        max-width: 120px;
+    }
+}

@@ -1,10 +1,8 @@
 .card{
     max-width: 1352px;
-}
-.details1{
     display: flex;
-    gap: 30px;
-} 
+    gap: 25px;
+}
 .animedetails{
     max-width: 927px;
 
@@ -12,7 +10,7 @@
 #largeimage{
     min-width: 350px;
     min-height: 450px;
-    max-height: 500px;
+    max-height: 550px;
 }
 .anime_characters img{
     width:80px;
@@ -31,3 +29,49 @@
     width: 80px;
 }
 
+@media only screen and (max-width:1050px) {
+    #largeimage{
+        min-width: 30vw;
+        max-height: 65vh;
+    }
+    .animedetails{
+        max-width: 60vw;
+        font-size: small;
+    }
+    .anime_characters img{
+        width: 60px;
+        height: 60px;
+    }
+    .character{
+        gap:6px;
+        margin:0 5px;
+    }
+}
+@media only screen and (max-width:450px) {
+    .card{
+        flex-direction: column;
+        align-items: center;
+    }
+    #largeimage{
+        min-width:50vw ;
+        max-width: 70vw;
+        min-height: 40vh;
+        max-height: 55vh;
+    }
+    .animedetails{
+        max-width: 80vw;
+    }
+    .anime_characters img,.anime_characters p{
+        margin:3px;
+        max-width: 60px;
+        max-height: 60px;
+    }
+    .character{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap:10px;
+    }
+    .character div{
+        max-width: 70px;
+    }
+}

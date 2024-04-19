@@ -1,4 +1,4 @@
-import { BrowserRouter as Router , Routes,Route,Redirect , Link} from 'react-router-dom'
+import { BrowserRouter as Router , Routes,Route , Link,Navigate} from 'react-router-dom'
 import { Manga } from './components/manga'
 import { Animecard } from './components/animedetails'
 import { Home } from './components/home'
@@ -12,12 +12,21 @@ function App() {
   let [fullanimedata,setfulldata]=useState([])
   const [animedata,setanimedata]=useState([])
   let [pagenum,setnum]=useState(1)
-  let [showid,setshowid]=useState(false)
+  const [showid,setshowid]=useState(false)
   const [category,setcategory]=useState("anime")
+  let [loading,isloading]=useState(true)
   async function fetchreq(){
-    const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pagenum}`)
-    adddata(resp.data.data)
-    setfulldata(resp.data.data)
+    try{
+      const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pagenum}`)
+      adddata(resp.data.data)
+      setfulldata(resp.data.data)
+    }
+    catch(e){
+      console.log('fetch',e)
+    }
+    finally{
+      isloading(false)
+    }
   }
   function adddata(data){
     let anime_obj={}
@@ -40,7 +49,7 @@ function App() {
   }
   useEffect(()=>{fetchreq()},[pagenum,category])
   return (
-    <appcontext.Provider value={{animedata,pagenum,setnum,setshowid}}>
+    <appcontext.Provider value={{animedata,pagenum,setnum,setshowid,fullanimedata,showid,loading,category}}>
       <div className="App">
         <Router>
           <nav className="navbar">
@@ -52,8 +61,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path='/manga' element={<Manga/>}/>
-            <Route path="/animedetails" element={<Animecard  fulldata={fullanimedata} id={--showid} fetchreq={fetchreq}/>} />
-            <Redirect path="/"/>
+            <Route path="/animedetails" element={loading?<Navigate to="/" replace/>:<Animecard/>} />
           </Routes>
         </Router>
       </div>

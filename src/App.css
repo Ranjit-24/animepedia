@@ -1,7 +1,8 @@
 *,*::after,*::before{
   box-sizing: border-box;
 }
-#root {
+
+body{
   margin: 0 50px;
 }
 .navbar{
@@ -17,4 +18,12 @@
 h1{
   color: white;
   margin : "0"
+}
+@media only screen and (max-width:430px){
+  body{
+    margin: 0 25px;
+  }
+  .navbar{
+    margin: 15px 0 35px 0;
+  }
 }

@@ -1,6 +1,6 @@
 .pagination{
     display: flex;
-    margin: 20px 75px;
+    margin: 20px 15px;
     justify-content: space-between;
 }
 button{
@@ -38,4 +38,17 @@ button{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+@media only screen and (max-width:630px) {
+    .pagenumbering{
+        gap:10px;
+        max-width: 50%;
+    }
+    #pret_page_num,#prev_page_num,#next_page_num{
+        width: 40px;
+        height: 40px;
+    }
+    button{
+        padding: 15px;
+    }
 }
