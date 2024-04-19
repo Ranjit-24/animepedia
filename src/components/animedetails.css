@@ -1,8 +1,33 @@
 .card{
+    max-width: 1352px;
+}
+.details1{
     display: flex;
     gap: 30px;
 } 
-.card img{
-    min-width: 350px;
-    min-height: 300px;
+.animedetails{
+    max-width: 927px;
+
 }
+#largeimage{
+    min-width: 350px;
+    min-height: 450px;
+    max-height: 500px;
+}
+.anime_characters img{
+    width:80px;
+    height:80px;
+    border-radius: 50%;
+    margin: 5px;
+}
+.character{
+    margin: 0 12px;
+    display: flex;
+    gap: 10px;
+    overflow:hidden;
+}
+.character div{
+    text-align: center;
+    width: 80px;
+}
+

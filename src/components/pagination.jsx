@@ -7,7 +7,6 @@ export function Pagination(){
     return (
         <div className="pagination">
             {pagenumbering>1 ? <button id="prev" onClick={()=>setnum((prev)=>{
-                console.log(pagenumbering)
                 return --prev})}>Prev</button>:<br/>}
             <div className="pagenumbering">
                 {--pagenumbering!==0 &&<div id="prev_page_num"><p>{pagenumbering}</p></div>}

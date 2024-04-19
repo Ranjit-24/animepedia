@@ -1,4 +1,4 @@
-import { BrowserRouter as Router , Routes,Route , Link} from 'react-router-dom'
+import { BrowserRouter as Router , Routes,Route,Redirect , Link} from 'react-router-dom'
 import { Manga } from './components/manga'
 import { Animecard } from './components/animedetails'
 import { Home } from './components/home'
@@ -14,11 +14,10 @@ function App() {
   let [pagenum,setnum]=useState(1)
   let [showid,setshowid]=useState(false)
   const [category,setcategory]=useState("anime")
-  async function fetchreq(pageunit){
-    const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pageunit}`)
+  async function fetchreq(){
+    const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pagenum}`)
     adddata(resp.data.data)
     setfulldata(resp.data.data)
-    console.log(resp.data);
   }
   function adddata(data){
     let anime_obj={}
@@ -39,13 +38,13 @@ function App() {
     setnum(1)
     setcategory(cat)
   }
-  useEffect(()=>{fetchreq(pagenum)},[pagenum,category])
+  useEffect(()=>{fetchreq()},[pagenum,category])
   return (
     <appcontext.Provider value={{animedata,pagenum,setnum,setshowid}}>
       <div className="App">
         <Router>
           <nav className="navbar">
-          <Link to="/" onClick={()=>changepage("anime")}><h1>Animepedia</h1></Link>
+            <Link to="/" onClick={()=>changepage("anime")}><h1>Animepedia</h1></Link>
             <div className="linkdiv">
             <Link to="/manga" onClick={()=>changepage("manga")}>Manga</Link>
             </div>
@@ -53,7 +52,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path='/manga' element={<Manga/>}/>
-            <Route path="/animedetails" element={<Animecard fulldata={fullanimedata} id={--showid}/>} />
+            <Route path="/animedetails" element={<Animecard  fulldata={fullanimedata} id={--showid} fetchreq={fetchreq}/>} />
+            <Redirect path="/"/>
           </Routes>
         </Router>
       </div>

@@ -17,7 +17,6 @@ export function Home(){
                 <p >{val.title}</p>
                 </div>
                 </Link>
-                
                 )
             })
         }
