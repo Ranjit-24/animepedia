@@ -1,4 +1,4 @@
-import { BrowserRouter as Router , Routes,Route , Link,Navigate} from 'react-router-dom'
+import { HashRouter as Router , Routes,Route , Link} from 'react-router-dom'
 import { Manga } from './components/manga'
 import { Animecard } from './components/animedetails'
 import { Home } from './components/home'
@@ -12,9 +12,11 @@ function App() {
   let [fullanimedata,setfulldata]=useState([])
   const [animedata,setanimedata]=useState([])
   let [pagenum,setnum]=useState(1)
-  const [showid,setshowid]=useState(false)
-  const [category,setcategory]=useState("anime")
+  const [showid,setshowid]=useState(localStorage.getItem("animeid")?localStorage.getItem("animeid"):false)
+  const [category,setcategory]=useState(localStorage.getItem("category")?localStorage.getItem("category"):"anime")
   let [loading,isloading]=useState(true)
+  useEffect(()=>localStorage.setItem("category",category),[category])
+  useEffect(()=>localStorage.setItem("animeid",showid),[showid])
   async function fetchreq(){
     try{
       const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pagenum}`)
@@ -51,7 +53,7 @@ function App() {
   return (
     <appcontext.Provider value={{animedata,pagenum,setnum,setshowid,fullanimedata,showid,loading,category}}>
       <div className="App">
-        <Router>
+        <Router basename='/'>
           <nav className="navbar">
             <Link to="/" onClick={()=>changepage("anime")}><h1>Animepedia</h1></Link>
             <div className="linkdiv">
@@ -61,7 +63,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path='/manga' element={<Manga/>}/>
-            <Route path="/animedetails" element={loading?<Navigate to="../index.html" replace/>:<Animecard/>} />
+            <Route path="/animedetails" element={loading?<h1>Loading...</h1>:<Animecard/>}/>
           </Routes>
         </Router>
       </div>
