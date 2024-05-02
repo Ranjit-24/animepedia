@@ -28,6 +28,14 @@
     text-align: center;
     width: 80px;
 }
+#animedetails_header button{
+    height: 50px;
+    border-radius: 15px;
+    #animewatch-but{
+        color:inherit;
+        font-family: inherit;
+    }
+}
 
 @media only screen and (max-width:1050px) {
     #largeimage{

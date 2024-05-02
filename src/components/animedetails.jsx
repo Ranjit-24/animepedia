@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react"
+import { Link } from "react-router-dom";
 import { appcontext } from "../App";
 import Axios from "axios";
 import "./animedetails.css"
@@ -31,7 +32,10 @@ export function Animecard(){
         <div className="card" style={{backgroundColor:"inherite"}}>
                     <img id="largeimage" src={fullanimedata[showid].images.jpg.large_image_url} alt="" />
                     <div className="animedetails">
+                        <div id="animedetails_header" style={{display:"flex", alignItems:"center",justifyContent:"space-between"}}>
                         <h1 >{fullanimedata[showid].title}</h1>
+                        <button><Link id="animewatch-but" to="/animewatch">Watch</Link></button>
+                        </div>
                         {category==="anime" ? <p>Episodes:{fullanimedata[showid].episodes}</p>:<p>Chapters:{fullanimedata[showid].chapters}</p>}
                         <p>{fullanimedata[showid].synopsis}</p>
                         <Character_det/>

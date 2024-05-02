@@ -2,6 +2,7 @@ import { HashRouter as Router , Routes,Route , Link} from 'react-router-dom'
 import { Manga } from './components/manga'
 import { Animecard } from './components/animedetails'
 import { Home } from './components/home'
+import { Animewatch } from './components/animewatch'
 import { createContext, useEffect } from 'react'
 import  Axios  from 'axios'
 import { useState } from 'react'
@@ -64,6 +65,7 @@ function App() {
             <Route path="/" element={<Home/>}/>
             <Route path='/manga' element={<Manga/>}/>
             <Route path="/animedetails" element={loading?<h1>Loading...</h1>:<Animecard/>}/>
+            <Route path='/animewatch' element={<Animewatch/>}/>
           </Routes>
         </Router>
       </div>
