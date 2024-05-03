@@ -1,0 +1,10 @@
+#aniwatch-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#my-video{
+    position: absolute;
+    width: 90vw;
+    height: 80vh;
+}
