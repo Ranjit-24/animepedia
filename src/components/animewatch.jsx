@@ -12,7 +12,9 @@ async function fetch_data(ani_search,setwatchload,setseason_id){
     //fetching anime season id
     const fetch_anime_season_id= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/related/${animeid}`)
     data= await fetch_anime_season_id.json()
-    data.infoX[3]=== undefined ? animeid=animeid:animeid=data.infoX[3].season[0].id
+    data.infoX[3]=== undefined ? animeid=animeid.split("-"):animeid=data.infoX[3].season[0].id
+    // here the last number is seprated from animeid  
+    animeid=animeid[animeid.length-1]  
     console.log("stage2 fetching completed")
     //fetching episode id
     const fetch_anime_episode_id= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/episode/${animeid}`)
@@ -40,7 +42,8 @@ export function Animewatch(){
     --showid
     let [anime_season_id,setseason_id]=useState();
     useEffect(()=>{!loading && fetch_data(fullanimedata[showid].title,setwatchload,setseason_id)},[])
-    return <>{watchdataloading ? <h1>Loading.....</h1>:
+    //reload issue solution 
+    return <div id="aniwatch-div">{watchdataloading ? <h1>Loading.....</h1>:
     <>
     <p>{anime_season_id}</p>
     <video ref={videojs} id="my-video"
@@ -52,5 +55,5 @@ export function Animewatch(){
             data-setup="{}">
         <source src={`${anime_season_id}`} type="application/x-mpegURL"/>
     </video>
-    </>}</>
+    </>}</div>
 }
