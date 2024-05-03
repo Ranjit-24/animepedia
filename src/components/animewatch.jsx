@@ -1,5 +1,7 @@
 import { useState,useContext, useEffect } from "react"
 import { appcontext } from "../App";
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 async function fetch_data(ani_search,setwatchload,setseason_id){
     let animeid
     //fetching animeid
@@ -34,7 +36,13 @@ export function Animewatch(){
     useEffect(()=>{!loading && fetch_data(fullanimedata[showid].title,setwatchload,setseason_id)},[])
     return <>{watchdataloading ? <h1>Loading.....</h1>:
     <>
-    <video width="600" height="400" controls>
+    <video ref={videojs} id="my-video"
+            className="video-js"
+            controls
+            width="640"
+            height="264"
+            poster="MY_VIDEO_POSTER.jpg"
+            data-setup="{}">
         <source src={{anime_season_id}} type="application/x-mpegURL"/>
     </video>
     </>}</>
