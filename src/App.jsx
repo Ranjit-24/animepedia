@@ -2,7 +2,7 @@ import { HashRouter as Router , Routes,Route , Link} from 'react-router-dom'
 import { Manga } from './components/manga'
 import { Animecard } from './components/animedetails'
 import { Home } from './components/home'
-import { Animewatch } from './components/animewatch'
+import { Animewatch } from './components/animewatch_coponents/animewatch'
 import { createContext, useEffect } from 'react'
 import  Axios  from 'axios'
 import { useState } from 'react'
@@ -23,6 +23,7 @@ function App() {
       const resp = await Axios.get(`https://api.jikan.moe/v4/top/${category}?page=${pagenum}`)
       adddata(resp.data.data)
       setfulldata(resp.data.data)
+
     }
     catch(e){
       console.log('fetch',e)
