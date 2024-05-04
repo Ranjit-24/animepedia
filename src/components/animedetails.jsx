@@ -34,7 +34,7 @@ export function Animecard(){
                     <div className="animedetails">
                         <div id="animedetails_header" style={{display:"flex", alignItems:"center",justifyContent:"space-between"}}>
                         <h1 >{fullanimedata[showid].title}</h1>
-                        <button><Link id="animewatch-but" to="/animewatch">Watch</Link></button>
+                        <button onClick={()=>localStorage.setItem("animename",fullanimedata[showid].title)}><Link id="animewatch-but" to="/animewatch">Watch</Link></button>
                         </div>
                         {category==="anime" ? <p>Episodes:{fullanimedata[showid].episodes}</p>:<p>Chapters:{fullanimedata[showid].chapters}</p>}
                         <p>{fullanimedata[showid].synopsis}</p>
