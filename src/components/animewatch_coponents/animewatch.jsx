@@ -18,13 +18,16 @@ async function stage2_fetch(animeid){
     animeid=animeid.split("-")
     return animeid[animeid.length-1]
 }
-async function stage3_fetch(animeid,epnum){
+async function stage3_fetch(animeid,epnum,seteplist){
     const fetch_anime_episode_id= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/episode/${animeid}`)
     let data= await fetch_anime_episode_id.json()
     let epid =data.episodetown[epnum].epId
-    epid=epid.split("ep=")[1]
+    seteplist && seteplist(data.episodetown)
+    return epid.split("ep=")[1]
+}
+async function stage4_fetch(epid){
     const fetch_server_id= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/server/${epid}`)
-    data= await fetch_server_id.json()
+    let data= await fetch_server_id.json()
     let srcId= data.sub[0].srcId
     try{
     const fetch_url= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/src-server/${srcId}`)
@@ -35,16 +38,18 @@ async function stage3_fetch(animeid,epnum){
         console.log("error"+error)
     }
 }
-async function fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid){
+async function fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid,seteplist){
     //fetching animeid
     animeid =await stage1_fetch(ani_search)
     setloadstatus("stage1 fetching completed")
     //fetching anime season id
     animeid =await stage2_fetch(animeid)
-    setloadstatus("Almost there")
+    setloadstatus("stage2 fetching completed")
     //fetching episode id
+    let epid = await stage3_fetch(animeid,0,seteplist) 
+    setloadstatus("Almost there")
     //fetching server//fetching url
-    setvideourl(await stage3_fetch(animeid,0));
+    setvideourl(await stage4_fetch(epid));
     setloadstatus("stage5 fetching completed")
     setanimeid(animeid)
     setwatchload(false)
@@ -55,7 +60,7 @@ export function Animewatch(){
     let [video_url,setvideourl]=useState();
     let [loadingstatus,setloadstatus]=useState("wait for a min");
     let ani_search = localStorage.getItem("animename")
-    let epnumarr=[0,1,2,3,4,5,6,7,8,9]
+    let [epnumarr,seteplist]=useState([])
     const playerRef = useRef(null);
     const videoJsOptions = {
         autoplay: true,
@@ -78,10 +83,11 @@ export function Animewatch(){
         });
       };
     async function changeepnum(val){
-        let data = await stage3_fetch(animeid,val)
+        let epid =await stage3_fetch(animeid,val)
+        let data = await stage4_fetch(epid)
         setvideourl(data)
     }
-    useEffect(()=>{fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid)},[])
+    useEffect(()=>{fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid,seteplist)},[])
     return <div id="aniwatch-div">{watchdataloading ? 
     <>
     <h1>Loading.....</h1>
@@ -92,8 +98,8 @@ export function Animewatch(){
     <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
     <div id="episodenum-div">
         {
-            epnumarr.map((value)=>{
-                return <p key={value} id="episodenum" onClick={()=>changeepnum(value)} >{value}</p>
+            epnumarr.map((value,key)=>{
+                return <p key={key} id="episodenum" onClick={()=>changeepnum(key)} >{++key}</p>
             })
         }
     </div>
