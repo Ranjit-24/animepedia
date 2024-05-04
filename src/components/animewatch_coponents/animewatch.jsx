@@ -26,9 +26,14 @@ async function stage3_fetch(animeid,epnum){
     const fetch_server_id= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/server/${epid}`)
     data= await fetch_server_id.json()
     let srcId= data.sub[0].srcId
+    try{
     const fetch_url= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/src-server/${srcId}`)
     data= await fetch_url.json()
     return data.restres.sources[0].url
+    }
+    catch(error){
+        console.log("error"+error)
+    }
 }
 async function fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid){
     //fetching animeid

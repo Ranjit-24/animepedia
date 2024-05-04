@@ -4,6 +4,7 @@
     align-items: center;
 }
 #video_js_id{
+    z-index: -1;
     width: 90vw;
     height: 80vh;
 }
