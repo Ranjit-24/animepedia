@@ -47,7 +47,6 @@ async function fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,anim
 export function Animewatch(){
     let [animeid,setanimeid]=useState()
     let [watchdataloading,setwatchload]=useState(true)
-    let {fullanimedata,showid,loading}=useContext(appcontext)
     let [video_url,setvideourl]=useState();
     let [loadingstatus,setloadstatus]=useState("wait for a min");
     let ani_search = localStorage.getItem("animename")
@@ -74,7 +73,6 @@ export function Animewatch(){
       };
     
     useEffect(()=>{fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid)},[])
-    --showid
     return <div id="aniwatch-div">{watchdataloading ? 
     <>
     <h1>Loading.....</h1>
@@ -83,6 +81,7 @@ export function Animewatch(){
     :
     <>
     <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+
     </>}</div>
     
 }
