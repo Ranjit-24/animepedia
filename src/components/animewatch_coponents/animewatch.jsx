@@ -28,7 +28,7 @@ async function stage3_fetch(animeid,epnum,seteplist){
 async function stage4_fetch(epid){
     const fetch_server_id= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/server/${epid}`)
     let data= await fetch_server_id.json()
-    let srcId= data.sub[0].srcId
+    let srcId=data.dub== null ?  data.sub[0].srcId : data.dub[0].srcId
     try{
     const fetch_url= await fetch(`https://aniwatch-api-v1-0.onrender.com/api/src-server/${srcId}`)
     data= await fetch_url.json()
