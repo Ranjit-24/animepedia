@@ -50,6 +50,7 @@ export function Animewatch(){
     let [video_url,setvideourl]=useState();
     let [loadingstatus,setloadstatus]=useState("wait for a min");
     let ani_search = localStorage.getItem("animename")
+    let epnumarr=[0,1,2,3,4,5,6,7,8,9]
     const playerRef = useRef(null);
     const videoJsOptions = {
         autoplay: true,
@@ -71,7 +72,10 @@ export function Animewatch(){
           videojs.log('player will dispose');
         });
       };
-    
+    async function changeepnum(val){
+        let data = await stage3_fetch(animeid,val)
+        setvideourl(data)
+    }
     useEffect(()=>{fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid)},[])
     return <div id="aniwatch-div">{watchdataloading ? 
     <>
@@ -81,7 +85,13 @@ export function Animewatch(){
     :
     <>
     <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-
+    <div id="episodenum-div">
+        {
+            epnumarr.map((value)=>{
+                return <p key={value} id="episodenum" onClick={()=>changeepnum(value)} >{value}</p>
+            })
+        }
+    </div>
     </>}</div>
     
 }
