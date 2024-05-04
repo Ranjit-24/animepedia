@@ -5,7 +5,6 @@
 }
 
 .vjs-big-play-dim{
-    z-index: 0;
     width: 90vw;
     height: 80vh;
 
@@ -13,6 +12,7 @@
 #episodenum-div{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px;
 }
 #episodenum{
