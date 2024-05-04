@@ -1,8 +1,10 @@
-import { useState,useContext, useEffect} from "react"
+import { useState,useContext, useEffect,useRef} from "react"
 import { appcontext } from "../../App";
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
+import VideoJS from "./videojs";
 import './animewatch.css'
+
 async function stage1_fetch(ani_search){
     const fetch_data= await fetch( `https://aniwatch-api-v1-0.onrender.com/api/search/${ani_search}`)
     let data = await  fetch_data.json()
@@ -48,7 +50,30 @@ export function Animewatch(){
     let {fullanimedata,showid,loading}=useContext(appcontext)
     let [video_url,setvideourl]=useState();
     let [loadingstatus,setloadstatus]=useState("wait for a min");
-    useEffect(()=>{!loading && fetch_data(fullanimedata[showid].title,setwatchload,setvideourl,setloadstatus,animeid,setanimeid)},[])
+    let ani_search = localStorage.getItem("animename")
+    const playerRef = useRef(null);
+    const videoJsOptions = {
+        autoplay: true,
+        controls:true,
+        sources: [{
+            src: `${video_url}`,
+            type: "application/x-mpegURL"
+      }]
+    };
+    const handlePlayerReady = (player) => {
+        playerRef.current = player;
+    
+        // You can handle player events here, for example:
+        player.on('waiting', () => {
+          videojs.log('player is waiting');
+        });
+    
+        player.on('dispose', () => {
+          videojs.log('player will dispose');
+        });
+      };
+    
+    useEffect(()=>{fetch_data(ani_search,setwatchload,setvideourl,setloadstatus,animeid,setanimeid)},[])
     --showid
     return <div id="aniwatch-div">{watchdataloading ? 
     <>
@@ -57,12 +82,7 @@ export function Animewatch(){
     </>
     :
     <>
-    <video ref={videojs} id="my-video"
-            className="video-js"
-            controls
-            poster="MY_VIDEO_POSTER.jpg"
-            data-setup="{}">
-        <source src={`${video_url}`} type="application/x-mpegURL"/>
-    </video>
+    <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
     </>}</div>
+    
 }
