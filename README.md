@@ -1,5 +1,7 @@
+ANIMEPEDIA 
+A site to get all the top anime and manga info 
 
-
+Hoisted using netlify:  https://animepedia-tv.netlify.app
 
 # React + Vite
 
